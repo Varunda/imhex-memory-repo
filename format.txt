@@ -1,0 +1,97 @@
+struct flora_layer {
+	u32 unk1;
+	u32 unk2;
+};
+
+struct flora {
+	le u32 layer_count;
+	flora_layer layers[layer_count];
+};
+
+struct eco {
+	u32 id;
+	le u32 flora_count;
+	flora floras[flora_count];
+};
+
+struct unk_array {
+	s16 height;
+	u8 unk1;
+	u8 unk2;
+};
+
+struct vertex {
+	s16 x;
+	s16 y;
+	s16 height_far;
+	s16 height_near;
+	u32 color1;
+	u32 color2;
+};
+
+struct vec3f {
+	le float x;
+	le float y;
+	le float z;
+};
+
+struct render_batch {
+	u32 index_offset;
+	u32 index_count;
+	u32 vertex_offset;
+	u32 vertex_count;
+};
+
+struct tile {
+	s32 x;
+	s32 y;
+	s32 unk1;
+	s32 unk2;
+	
+	le u32 eco_count;
+	eco ecos[eco_count];
+	
+	u32 index;
+	u32 unk3;
+	
+	le u32 image_data_length;
+	u8 image_data[image_data_length];
+	
+	le u32 textures_length;
+	u8 textures[textures_length];
+};
+
+struct header {
+	char type[4];
+	u32 version;
+	
+	le u32 tile_count;
+	tile tiles[tile_count];
+	
+	s32 unk1;
+	
+	le u32 unk_arr_length;
+	unk_array unk_arr1[unk_arr_length];
+	
+	le u32 indices_len;
+	u16 indices[indices_len];
+	
+	le u32 vertex_len;
+	vertex vertices[vertex_len];
+	
+	le u32 batch_len;
+	render_batch batches[batch_len];
+	
+	u8 optimized_draw[320];
+	
+	le u32 unk_arr2_len;
+	u16 unk_arr2[unk_arr2_len];
+	
+	le u32 unk_arr3_len;
+	vec3f unk_arr3[unk_arr3_len];
+	
+	u8 occluder_info[64];
+};
+
+header top @ 0x00;
+
